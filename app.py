@@ -403,13 +403,15 @@ with tabs[1]:
 with tabs[2]:
     st.header(f"Alimentation du {jour.strftime('%d/%m/%Y')}")
     mode = st.radio("Type de saisie", ["Aliment de la liste", "Saisie manuelle"], horizontal=True)
+    if mode == "Aliment de la liste":
+        # La catégorie est HORS du formulaire pour que la liste d'aliments se mette à jour immédiatement
+        cat = st.selectbox("Catégorie", sorted({v[0] for v in FOODS.values()}), key="cat_food")
     with st.form("f_food", clear_on_submit=True):
         c1, c2, c3 = st.columns([1.2, 2, 1])
         repas = c1.selectbox("Repas", REPAS)
         if mode == "Aliment de la liste":
-            cat = st.selectbox("Catégorie", sorted({v[0] for v in FOODS.values()}))
             noms = [n for n, v in FOODS.items() if v[0] == cat]
-            nom = c2.selectbox("Aliment", noms)
+            nom = c2.selectbox("Aliment", noms, key=f"aliment_{cat}")
             g = c3.number_input("Quantité (g ou ml)", 10, 1500, 100, 10)
             custom = None
         else:
