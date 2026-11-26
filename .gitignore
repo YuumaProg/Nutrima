@@ -1,0 +1,10 @@
+# Base de données (contient les comptes et données des utilisateurs : ne jamais la publier)
+data/*.db
+data/*.db-*
+
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+.streamlit/secrets.toml
